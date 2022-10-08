@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactsList
+namespace ContactsList.Services.Abstract
 {
-    internal class JsonConfig
+    public interface IJsonConfigService
     {
+        public LanguageConfig Extract();
     }
 }
