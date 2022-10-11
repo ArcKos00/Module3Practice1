@@ -5,23 +5,51 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Text.Json;
-using Newtonsoft.Json;
+using ContactsList.Models;
 
 namespace ContactsList.Services
 {
     public class JsonConfigService
     {
-        public LanguageConfig Extract()
+        private const string DefaultPath = "\\Cultures\\";
+        private const string TypeFiles = ".json";
+        private const string DefaultLanguagePack = "en-US";
+        public LanguageConfigModel Extract(string changedCulture)
         {
-            return new LanguageConfig();
+            LanguageConfigModel config;
+            string path = Directory.GetCurrentDirectory() + DefaultPath;
+            string neededFile = path + DefaultLanguagePack + TypeFiles;
+            string[] files = Directory.GetFiles(path);
+            string changedFile = path + changedCulture + TypeFiles;
+            foreach (var file in files)
+            {
+                if (file == changedFile)
+                {
+                    neededFile = file;
+                    break;
+                }
+            }
+
+            using (var reader = new StreamReader(neededFile))
+            {
+                config = JsonSerializer.Deserialize<LanguageConfigModel>(reader.ReadToEnd());
+            }
+
+            return config;
         }
 
-        public void WriteLanguageConfigInJson()
+        public string ViewFiles()
         {
-            CultureInfo culture = CultureInfo.GetCultureInfo(0x00000C0A);
-            string filename = "hhh.json";
-            var json = JsonConvert.SerializeObject(culture);
-            File.WriteAllText(filename, json);
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory() + DefaultPath);
+            Console.WriteLine("Введите язык из перечисленых вариантов");
+            foreach (var file in files)
+            {
+                string shortFile = Path.GetFileName(file);
+                shortFile = shortFile.Split('.')[0];
+                Console.Write(shortFile + "    ");
+            }
+
+            return ;
         }
     }
 }

@@ -1,6 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using ContactsList;
+using ContactsList.Models;
 using ContactsList.Services;
 
-Console.WriteLine("Hello, World!");
+int minLength = 1;
+int maxLength = 5;
+MyContactsCollection contacts = new MyContactsCollection();
 
-new JsonConfigService().WriteLanguageConfigInJson();
+new RandomService().RandomContacts9(ref contacts, minLength, maxLength);
+contacts.ViewCollecction();
+Console.ReadLine();

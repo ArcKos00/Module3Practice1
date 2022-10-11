@@ -12,11 +12,11 @@ namespace ContactsList
     {
         public int Compare(ContactModel x, ContactModel y)
         {
-            if (x.Name.CompareTo(y.Name) < 0)
+            if (x.FullName.CompareTo(y.FullName) < 0)
             {
                 return -1;
             }
-            else if (x.Name.CompareTo(y.Name) > 0)
+            else if (x.FullName.CompareTo(y.FullName) > 0)
             {
                 return 1;
             }

@@ -10,19 +10,24 @@ namespace ContactsList.Services
 {
     public class ContactService : IContactService
     {
-        public ContactModel AddContact(string name, string number)
+        public ContactModel AddContact(string firstName, string secondName, string number)
         {
-            return new ContactModel() { Name = name, Number = number };
+            return new ContactModel() { FirstName = firstName, LastName = secondName, Number = "+" + number };
         }
 
-        public ContactModel RenameContact(ContactModel contact, string newName)
+        public ContactModel RenameFirstNameContact(ContactModel contact, string newName)
         {
-            return new ContactModel() { Name = newName, Number = contact.Number };
+            return new ContactModel() { FirstName = newName, Number = contact.Number };
+        }
+
+        public ContactModel RenameLastNameContact(ContactModel contact, string newName)
+        {
+            return new ContactModel() { LastName = newName, Number = contact.Number };
         }
 
         public ContactModel RechangeContactNumber(ContactModel contact, string newNumber)
         {
-            return new ContactModel() { Name = contact.Name, Number = newNumber };
+            return new ContactModel() { FirstName = contact.FirstName, LastName = contact.LastName, Number = "+" + newNumber };
         }
     }
 }

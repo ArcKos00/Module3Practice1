@@ -8,12 +8,16 @@ namespace ContactsList.Models
 {
     public class ContactModel
     {
-        public string Number
-        {
-            get { return Number; }
-            set { Number = "+" + value; }
-        }
+        public string Number { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        public string Name { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
     }
 }
