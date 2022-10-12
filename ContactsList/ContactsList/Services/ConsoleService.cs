@@ -33,6 +33,7 @@ namespace ContactsList.Services
                 Console.Write(shortFile + "    ");
             }
 
+            Console.WriteLine();
             return Console.ReadLine();
         }
     }

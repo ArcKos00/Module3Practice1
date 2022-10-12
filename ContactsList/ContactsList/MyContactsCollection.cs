@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContactsList.Models;
 using ContactsList.Services;
@@ -21,8 +22,7 @@ namespace ContactsList
 
         public MyContactsCollection()
         {
-            string culture = _consoleExecutor.ViewFiles(Config.DefaultPath);
-            _language = new JsonConfigService().Extract(culture);
+            _language = new JsonConfigService().Extract(_consoleExecutor.ViewFiles(Config.DefaultPath));
 
             CultureInfo.CurrentCulture = new CultureInfo(_language.LCID);
             _contactList = new ContactModel[][]
@@ -40,6 +40,33 @@ namespace ContactsList
         }
 
         public int Length { get; set; }
+
+        public void RechangeLanguage()
+        {
+            _language = new JsonConfigService().Extract(_consoleExecutor.ViewFiles(Config.DefaultPath));
+            Rebuild();
+            new ConsoleService().ViewCollecction(_contactList);
+        }
+
+        public void Rebuild()
+        {
+            Length = Zero;
+            ContactModel[][] newContacts = new ContactModel[_contactList.Length][];
+            for (int i = 0; i < newContacts.Length; i++)
+            {
+                newContacts[i] = new ContactModel[Zero];
+            }
+
+            for (int i = 0; i < newContacts.Length; i++)
+            {
+                for (int j = 0; j < _contactList[i].Length; j++)
+                {
+                    Add(_contactList[i][j], ref newContacts);
+                }
+            }
+
+            _contactList = newContacts;
+        }
 
         public void Add(IContactService contact)
         {
@@ -63,20 +90,26 @@ namespace ContactsList
                 }
             }
 
-            ChangeWhereAdd(contact.AddContact(firstName, secondName, number.ToString()));
+            ChangeWhereAdd(contact.AddContact(firstName, secondName, number.ToString()), ref _contactList);
             Sort();
             Length++;
         }
 
         public void Add(ContactModel contact)
         {
-            ChangeWhereAdd(contact);
+            ChangeWhereAdd(contact, ref _contactList);
             Sort();
-            new ConsoleService().ViewCollecction(_contactList);
             Length++;
         }
 
-        public void ChangeWhereAdd(ContactModel contact)
+        public void Add(ContactModel contact, ref ContactModel[][] list)
+        {
+            ChangeWhereAdd(contact, ref list);
+            Sort();
+            Length++;
+        }
+
+        public void ChangeWhereAdd(ContactModel contact, ref ContactModel[][] list)
         {
             int count = 0;
             bool accessToLeterArray = false;
@@ -87,6 +120,7 @@ namespace ContactsList
                 if (charToCompare.Equals(leters[i]))
                 {
                     accessToLeterArray = true;
+                    break;
                 }
             }
 
@@ -103,7 +137,7 @@ namespace ContactsList
                 count = 2;
             }
 
-            new ResizeServices<ContactModel>().AddResize(ref _contactList[count], contact);
+            new ResizeServices<ContactModel>().AddResize(ref list[count], contact);
         }
 
         public bool Remove(ContactModel contactToRemove)
