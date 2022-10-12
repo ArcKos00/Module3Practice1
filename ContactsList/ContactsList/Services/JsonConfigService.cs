@@ -49,7 +49,7 @@ namespace ContactsList.Services
                 Console.Write(shortFile + "    ");
             }
 
-            return ;
+            return Console.ReadLine();
         }
     }
 }
