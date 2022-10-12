@@ -7,9 +7,9 @@ using ContactsList.Models;
 
 namespace ContactsList.Services.Abstract
 {
-    public interface IResizeService
+    public interface IResizeService<T>
     {
-        public void AddResize(ref ContactModel[] contacts, ContactModel contact);
-        public void RemoveResize(ref ContactModel[] contacts, int index);
+        public void AddResize(ref T[] contacts, T contact);
+        public void RemoveResize(ref T[] contacts, int index);
     }
 }

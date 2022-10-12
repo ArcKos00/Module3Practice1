@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContactsList.Models;
+using ContactsList.Services.Abstract;
 
 namespace ContactsList.Services
 {
-    public class RandomService
+    public class RandomService<T> : IRandomService<T>
+        where T : MyContactsCollection
     {
         private Random _random = new Random();
         public string RandNum(int count)
@@ -42,7 +45,7 @@ namespace ContactsList.Services
             return stringBuilder.ToString();
         }
 
-        public void RandomContacts9(ref MyContactsCollection contacts, int minCount, int maxCount)
+        public void RandomContacts9(ref T contacts, int minCount, int maxCount)
         {
             contacts.Add(new ContactService().AddContact(
                 RandName(_random.Next(minCount, maxCount)),

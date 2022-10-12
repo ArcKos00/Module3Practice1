@@ -11,9 +11,6 @@ namespace ContactsList.Models
     public class LanguageConfigModel
     {
         public int LCID { get; set; }
-        public char LowerCharMin { get; set; }
-        public char LowerCharMax { get; set; }
-        public char UpperCharMin { get; set; }
-        public char UpperCharMax { get; set; }
+        public string Alphabet { get; set; }
     }
 }

@@ -8,11 +8,11 @@ using ContactsList.Services.Abstract;
 
 namespace ContactsList.Services
 {
-    public class ResizeServices : IResizeService
+    public class ResizeServices<T> : IResizeService<T>
     {
-        public void AddResize(ref ContactModel[] contactList, ContactModel contact)
+        public void AddResize(ref T[] contactList, T contact)
         {
-            ContactModel[] newList = new ContactModel[contactList.Length + 1];
+            T[] newList = new T[contactList.Length + 1];
             for (int i = 0; i < contactList.Length; i++)
             {
                 newList[i] = contactList[i];
@@ -22,9 +22,9 @@ namespace ContactsList.Services
             contactList[contactList.Length - 1] = contact;
         }
 
-        public void RemoveResize(ref ContactModel[] contactList, int index)
+        public void RemoveResize(ref T[] contactList, int index)
         {
-            ContactModel[] newList = new ContactModel[contactList.Length - 1];
+            T[] newList = new T[contactList.Length - 1];
             for (int i = 0; i < index; i++)
             {
                 newList[i] = contactList[i];

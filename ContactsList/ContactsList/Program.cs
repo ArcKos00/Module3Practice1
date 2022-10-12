@@ -2,10 +2,10 @@
 using ContactsList.Models;
 using ContactsList.Services;
 
-int minLength = 1;
-int maxLength = 5;
-MyContactsCollection contacts = new MyContactsCollection();
+int minLength = 4;
+int maxLength = 10;
+var contacts = new MyContactsCollection();
 
-new RandomService().RandomContacts9(ref contacts, minLength, maxLength);
-contacts.ViewCollecction();
+new RandomService<MyContactsCollection>().RandomContacts9(ref contacts, minLength, maxLength);
+new ConsoleService().ViewCollecction(contacts.Contacts);
 Console.ReadLine();
